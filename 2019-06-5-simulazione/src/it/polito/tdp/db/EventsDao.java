@@ -144,13 +144,16 @@ public class EventsDao {
 	}
 	
 	public List<Evento> listAllEventsPerGiorno(int anno, int mese, int giorno, Map<Integer, Distretto> mapId){
-		String sql = "SELECT incident_id,offence_category_id,reported_date,district_id " + 
+		String sql = "SELECT incident_id,offense_category_id,reported_date,district_id " + 
 				"FROM EVENTS " + 
-				"WHERE DAY(reported_date) = 12 AND MONTH(reported_date)=10 and YEAR(reported_date)=2015" ;
+				"WHERE DAY(reported_date) = ? AND MONTH(reported_date)=? and YEAR(reported_date)=?" ;
 		try {
 			Connection conn = DBConnect.getConnection() ;
 
 			PreparedStatement st = conn.prepareStatement(sql) ;
+			st.setInt(1, giorno);
+			st.setInt(2, mese);
+			st.setInt(3, anno);
 			
 			List<Evento> list = new ArrayList<>() ;
 			
@@ -161,7 +164,7 @@ public class EventsDao {
 					list.add(new Evento(TipoEvento.EVENTO_VERIFICATO,res.getLong("incident_id"),
 							res.getString("offense_category_id"),
 							res.getTimestamp("reported_date").toLocalDateTime(),
-							mapId.get(res.getInt("district_id"))));
+							mapId.get(res.getInt("district_id")), null));
 				} catch (Throwable t) {
 					t.printStackTrace();
 					System.out.println(res.getInt("id"));

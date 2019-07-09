@@ -20,7 +20,7 @@ public class Model {
 	private Graph<Distretto, DefaultWeightedEdge> grafo;
 	private Map<Integer, Distretto> mapId;
 	
-	public void creaGrafo(int anno, int dsId) {
+	public void creaGrafo(int anno) {
 		this.grafo = new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
 		this.distretti = dao.getAllDistretti();
 		
@@ -71,6 +71,36 @@ public class Model {
 		List<Integer> ltemp = new LinkedList<Integer>();
 		ltemp = dao.getAllDate();
 		return ltemp;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	public Map<Integer, Distretto> getMappa() {
+		// TODO Auto-generated method stub
+		return this.mapId;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	public Graph<Distretto, DefaultWeightedEdge> getGrafo() {
+		// TODO Auto-generated method stub
+		return this.grafo;
 	}
 	
 }
